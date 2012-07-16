@@ -49,6 +49,16 @@ class CallbackManager(object):
         self._logger = logging.getLogger('pika.callback.CallbackManager')
         self._callbacks = dict()
 
+    def sanitize(self, key):
+        """Will take Frame objects, classes, etc and attempt to return a valid
+        string identifier for them.
+
+        :param [Object,str,dict] key: The key to sanitize
+        :returns: str
+
+        """
+        return _name_or_value(key)
+
     def add(self, prefix, key, callback, one_shot=True, only_caller=None):
         """Add a callback to the stack for the specified key. If the call is
         specified as one_shot, it will be removed after being fired
